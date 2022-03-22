@@ -61,8 +61,8 @@ function App() {
     let todolistId2 = v1();
 
     let [todoLists, setTodoLists] = useState<Array<TodolistsType>>([
-        {id: todolistId1, title: "What to learn", filter: "active"},
-        {id: todolistId2, title: "What to buy", filter: "completed"}
+        {id: todolistId1, title: "What to learn", filter: "all"},
+        {id: todolistId2, title: "What to buy", filter: "all"}
     ])
 
     let removeTodolist = (todolistId: string) => {
@@ -85,9 +85,19 @@ function App() {
         ]
     })
 
+    function addTodolist(title: string) {
+        let todolist: TodolistsType = {
+            id: v1(),
+            title: title,
+            filter: "all"
+        }
+        setTodoLists([todolist, ...todoLists])
+        setTasks({...tasksObj, [todolist.id]: []})
+    }
+
     return (
         <div className="App">
-            <AddItemForm id={"asd"} addTask={() => {}}/>
+            <AddItemForm addItem={addTodolist}/>
             {
                 todoLists.map((tl) => {
                     let tasksForTodoList = tasksObj[tl.id];
