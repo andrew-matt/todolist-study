@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import './App.css';
-import {TasksPropsType, Todolist} from "./Todolist";
+import {Todolist} from "./Todolist";
 import {v1} from "uuid";
+import {AddItemForm} from "./AddItemForm";
 
 export function Counter() {
     debugger
@@ -86,6 +87,7 @@ function App() {
 
     return (
         <div className="App">
+            <AddItemForm id={"asd"} addTask={() => {}}/>
             {
                 todoLists.map((tl) => {
                     let tasksForTodoList = tasksObj[tl.id];
