@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import './App.css';
-import {Todolist} from "./Todolist";
+import {TasksPropsType, Todolist} from "./Todolist";
 import {v1} from "uuid";
 import {AddItemForm} from "./AddItemForm";
 
@@ -23,20 +23,22 @@ type TodolistsType = {
     filter: FilterValuesType
 }
 
+type TasksObjType = {
+    [key: string]: Array<TasksPropsType>
+}
+
 function App() {
 
     function removeTask(id: string, todolistId: string) {
         let tasks = tasksObj[todolistId]
-        let filteredTasks = tasks.filter(t => t.id !== id)
-        tasksObj[todolistId] = filteredTasks
+        tasksObj[todolistId] = tasks.filter(t => t.id !== id)
         setTasks({...tasksObj});
     }
 
     function addTask(title: string, todolistId: string) {
         let task = {id: v1(), title: title, isDone: false};
         let tasks = tasksObj[todolistId]
-        let newTasks = [task, ...tasks];
-        tasksObj[todolistId] = newTasks;
+        tasksObj[todolistId] = [task, ...tasks];
         setTasks({...tasksObj});
     }
 
@@ -72,7 +74,7 @@ function App() {
         setTasks({...tasksObj})
     }
 
-    let [tasksObj, setTasks] = useState({
+    let [tasksObj, setTasks] = useState<TasksObjType>({
         [todolistId1]: [
             {id: v1(), title: "CSS&HTML", isDone: true},
             {id: v1(), title: "JS", isDone: true},
@@ -103,11 +105,11 @@ function App() {
                     let tasksForTodoList = tasksObj[tl.id];
 
                     if (tl.filter === "completed") {
-                        tasksForTodoList = tasksForTodoList.filter(t => t.isDone === true);
+                        tasksForTodoList = tasksForTodoList.filter(t => t.isDone);
                     }
 
                     if (tl.filter === "active") {
-                        tasksForTodoList = tasksForTodoList.filter(t => t.isDone === false);
+                        tasksForTodoList = tasksForTodoList.filter(t => !t.isDone);
                     }
 
                     return <Todolist title={tl.title}
