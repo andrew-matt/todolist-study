@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from "react";
+import React, {ChangeEvent, useState} from "react";
 import {FilterValuesType} from "./App";
 import {AddItemForm} from "./AddItemForm";
 
@@ -55,7 +55,7 @@ export function Todolist(props: TodolistPropsType) {
                         }
                         return <li key={t.id} className={t.isDone ? "is-done" : ""}>
                             <input onChange={onChangeHandler} type="checkbox" checked={t.isDone}/>
-                            <span>{t.title}</span>
+                            <EditableSpan title={t.title}/>
                             <button onClick={onRemoveHandler}>x</button>
                         </li>
                     })
@@ -73,5 +73,23 @@ export function Todolist(props: TodolistPropsType) {
                 </button>
             </div>
         </div>
+    )
+}
+
+type EditableSpanPropsType = {
+    title: string
+}
+
+function EditableSpan(props: EditableSpanPropsType) {
+
+    let [editMode, setEditMode] = useState(false)
+
+    const activateEditMode = () => setEditMode(true)
+    const activateViewMode = () => setEditMode(false)
+
+    return (
+        editMode
+            ? <input value={props.title} onBlur={activateViewMode} autoFocus/>
+            : <span onDoubleClick={activateEditMode}>{props.title}</span>
     )
 }
