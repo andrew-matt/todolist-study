@@ -1,6 +1,7 @@
-import React, {ChangeEvent, useState} from "react";
+import React, {ChangeEvent} from "react";
 import {FilterValuesType} from "./App";
 import {AddItemForm} from "./AddItemForm";
+import {EditableSpan} from "./EditableSpan";
 
 export type TasksPropsType = {
     id: string
@@ -16,6 +17,7 @@ type TodolistPropsType = {
     changeFilter: (value: FilterValuesType, id: string) => void
     addTask: (title: string, todolistId: string) => void
     changeTaskStatus: (taskId: string, isDone: boolean, todolistId: string) => void
+    changeTaskTitle: (taskId: string, title: string, todolistId: string) => void
     filter: FilterValuesType
     removeTodolist: (todolistId: string) => void
 }
@@ -53,9 +55,12 @@ export function Todolist(props: TodolistPropsType) {
                         const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
                             props.changeTaskStatus(t.id, e.currentTarget.checked, props.id)
                         }
+                        const onChangeTitleHandler = (title: string) => {
+                            props.changeTaskTitle(t.id, title, props.id)
+                        }
                         return <li key={t.id} className={t.isDone ? "is-done" : ""}>
                             <input onChange={onChangeHandler} type="checkbox" checked={t.isDone}/>
-                            <EditableSpan title={t.title}/>
+                            <EditableSpan title={t.title} onChange={onChangeTitleHandler}/>
                             <button onClick={onRemoveHandler}>x</button>
                         </li>
                     })
@@ -76,20 +81,3 @@ export function Todolist(props: TodolistPropsType) {
     )
 }
 
-type EditableSpanPropsType = {
-    title: string
-}
-
-function EditableSpan(props: EditableSpanPropsType) {
-
-    let [editMode, setEditMode] = useState(false)
-
-    const activateEditMode = () => setEditMode(true)
-    const activateViewMode = () => setEditMode(false)
-
-    return (
-        editMode
-            ? <input value={props.title} onBlur={activateViewMode} autoFocus/>
-            : <span onDoubleClick={activateEditMode}>{props.title}</span>
-    )
-}

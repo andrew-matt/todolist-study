@@ -42,11 +42,20 @@ function App() {
         setTasks({...tasksObj});
     }
 
-    function changeStatus(taskId: string, isDone: boolean, todolistId: string) {
+    function changeTaskStatus(taskId: string, isDone: boolean, todolistId: string) {
         let tasks = tasksObj[todolistId]
         let task = tasks.find(t => t.id === taskId);
         if (task) {
             task.isDone = isDone;
+        }
+        setTasks({...tasksObj})
+    }
+
+    function changeTaskTitle(taskId: string, title: string, todolistId: string) {
+        let tasks = tasksObj[todolistId]
+        let task = tasks.find(t => t.id === taskId);
+        if (task) {
+            task.title = title;
         }
         setTasks({...tasksObj})
     }
@@ -112,17 +121,22 @@ function App() {
                         tasksForTodoList = tasksForTodoList.filter(t => !t.isDone);
                     }
 
-                    return <Todolist title={tl.title}
-                                     key={tl.id}
-                                     id={tl.id}
-                                     tasks={tasksForTodoList}
-                                     removeTask={removeTask}
-                                     changeFilter={changeFilter}
-                                     addTask={addTask}
-                                     changeTaskStatus={changeStatus}
-                                     filter={tl.filter}
-                                     removeTodolist={removeTodolist}
-                    />
+                    return (
+                        <Todolist
+                            title={tl.title}
+                            key={tl.id}
+                            id={tl.id}
+                            tasks={tasksForTodoList}
+                            removeTask={removeTask}
+                            changeFilter={changeFilter}
+                            addTask={addTask}
+                            changeTaskStatus={changeTaskStatus}
+                            changeTaskTitle={changeTaskTitle}
+                            filter={tl.filter}
+                            removeTodolist={removeTodolist}
+
+                        />
+                    )
                 })
             }
         </div>
