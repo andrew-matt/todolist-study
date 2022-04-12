@@ -2,7 +2,7 @@ import React, {ChangeEvent} from "react";
 import {FilterValuesType} from "./App";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
-import {Button, IconButton} from "@mui/material";
+import {Button, Checkbox, IconButton} from "@mui/material";
 import {Delete} from "@mui/icons-material";
 
 export type TasksPropsType = {
@@ -69,7 +69,7 @@ export function Todolist(props: TodolistPropsType) {
                             props.changeTaskTitle(t.id, title, props.id)
                         }
                         return <li key={t.id} className={t.isDone ? "is-done" : ""}>
-                            <input onChange={onChangeHandler} type="checkbox" checked={t.isDone}/>
+                            <Checkbox onChange={onChangeHandler} checked={t.isDone} color={"secondary"}/>
                             <EditableSpan title={t.title} onChange={onChangeTitleHandler}/>
                             <IconButton onClick={onRemoveHandler}>
                                 <Delete/>

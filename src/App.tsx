@@ -3,6 +3,8 @@ import './App.css';
 import {TasksPropsType, Todolist} from "./Todolist";
 import {v1} from "uuid";
 import {AddItemForm} from "./AddItemForm";
+import {AppBar, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@mui/material";
+import MenuIcon from '@mui/icons-material/Menu';
 
 export function Counter() {
     debugger
@@ -112,37 +114,57 @@ function App() {
 
     return (
         <div className="App">
-            <AddItemForm addItem={addTodolist}/>
-            {
-                todoLists.map((tl) => {
-                    let tasksForTodoList = tasksObj[tl.id];
+            <AppBar position="static">
+                <Toolbar variant="dense">
+                    <IconButton edge="start" color="inherit" aria-label="menu" sx={{mr: 2}}>
+                        <MenuIcon/>
+                    </IconButton>
+                    <Typography variant="h6" color="inherit" component="div">
+                        TodoLists
+                    </Typography>
+                </Toolbar>
+            </AppBar>
+            <Container fixed>
+                <Grid container style={{padding: "10px"}}>
+                    <AddItemForm addItem={addTodolist}/>
+                </Grid>
+                <Grid container spacing={3}>
+                    {
+                        todoLists.map((tl) => {
+                            let tasksForTodoList = tasksObj[tl.id];
 
-                    if (tl.filter === "completed") {
-                        tasksForTodoList = tasksForTodoList.filter(t => t.isDone);
+                            if (tl.filter === "completed") {
+                                tasksForTodoList = tasksForTodoList.filter(t => t.isDone);
+                            }
+
+                            if (tl.filter === "active") {
+                                tasksForTodoList = tasksForTodoList.filter(t => !t.isDone);
+                            }
+
+                            return (
+                                <Grid item>
+                                    <Paper style={{padding: "10px"}}>
+                                        <Todolist
+                                            title={tl.title}
+                                            key={tl.id}
+                                            id={tl.id}
+                                            tasks={tasksForTodoList}
+                                            removeTask={removeTask}
+                                            changeFilter={changeFilter}
+                                            addTask={addTask}
+                                            changeTaskStatus={changeTaskStatus}
+                                            changeTaskTitle={changeTaskTitle}
+                                            filter={tl.filter}
+                                            removeTodolist={removeTodolist}
+                                            changeTodolistTitle={changeTodolistTitle}
+                                        />
+                                    </Paper>
+                                </Grid>
+                            )
+                        })
                     }
-
-                    if (tl.filter === "active") {
-                        tasksForTodoList = tasksForTodoList.filter(t => !t.isDone);
-                    }
-
-                    return (
-                        <Todolist
-                            title={tl.title}
-                            key={tl.id}
-                            id={tl.id}
-                            tasks={tasksForTodoList}
-                            removeTask={removeTask}
-                            changeFilter={changeFilter}
-                            addTask={addTask}
-                            changeTaskStatus={changeTaskStatus}
-                            changeTaskTitle={changeTaskTitle}
-                            filter={tl.filter}
-                            removeTodolist={removeTodolist}
-                            changeTodolistTitle={changeTodolistTitle}
-                        />
-                    )
-                })
-            }
+                </Grid>
+            </Container>
         </div>
     );
 }
