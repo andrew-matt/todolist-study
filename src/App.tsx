@@ -84,11 +84,7 @@ function App() {
     }
 
     const changeTodolistTitle = (todolistId: string, title: string) => {
-        let todolist = todoLists.find(t => t.id === todolistId)
-        if (todolist) {
-            todolist.title = title
-            setTodoLists([...todoLists])
-        }
+        setTodoLists(todoLists.map(t => t.id === todolistId ? {...t, title} : t))
     }
 
     let [tasksObj, setTasks] = useState<TasksObjType>({
