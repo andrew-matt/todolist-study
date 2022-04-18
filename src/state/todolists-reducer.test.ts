@@ -1,6 +1,6 @@
 import {
-    AddTodolistAC, ChangeTodolistFilterAC,
-    ChangeTodolistFilterActionType,
+    AddTodolistAC,
+    ChangeTodolistFilterAC,
     ChangeTodolistTitleAC,
     RemoveTodolistAC,
     todoListsReducer
