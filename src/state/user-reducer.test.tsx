@@ -1,3 +1,4 @@
+import React from 'react';
 import {userReducer} from './user-reducer';
 
 test('user reducer should increment only age', () => {
@@ -11,13 +12,11 @@ test('user reducer should increment only age', () => {
 
 test('user reducer should increment only childrenCount', () => {
     const startState = { age: 20, childrenCount: 2, name: 'Dimych' };
+    const endState = userReducer(startState, { type: 'INCREMENT-CHILDREN-COUNT' })
 
-    const endState = userReducer(startState, {type: 'INCREMENT-CHILDREN-COUNT'})
-
-    expect(endState.childrenCount).toBe(3)
-    expect(endState.age).toBe(20)
+    expect(endState.age).toBe(20);
+    expect(endState.childrenCount).toBe(3);
 });
-
 
 test('user reducer should change name of user', () => {
     const startState = { name: 'Dimych', age: 20, childrenCount: 2 };
@@ -26,4 +25,5 @@ test('user reducer should change name of user', () => {
 
     expect(endState.name).toBe(newName);
 });
+
 
