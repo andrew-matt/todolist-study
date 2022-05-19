@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from 'react';
+import React, {ChangeEvent, useCallback} from 'react';
 import {FilterValuesType} from './App';
 import {AddItemForm} from './AddItemForm';
 import {EditableSpan} from './EditableSpan';
@@ -26,9 +26,10 @@ type PropsType = {
 }
 
 export function Todolist(props: PropsType) {
-    const addTask = (title: string) => {
+    console.log("Todolist is called")
+    const addTask = useCallback((title: string) => {
         props.addTask(title, props.id);
-    }
+    }, [])
 
     const removeTodolist = () => {
         props.removeTodolist(props.id);
@@ -42,9 +43,9 @@ export function Todolist(props: PropsType) {
     const onCompletedClickHandler = () => props.changeFilter("completed", props.id);
 
     return <div>
-        <h3> <EditableSpan value={props.title} onChange={changeTodolistTitle} />
+        <h3><EditableSpan value={props.title} onChange={changeTodolistTitle}/>
             <IconButton onClick={removeTodolist}>
-                <Delete />
+                <Delete/>
             </IconButton>
         </h3>
         <AddItemForm addItem={addTask}/>
@@ -68,15 +69,15 @@ export function Todolist(props: PropsType) {
                             onChange={onChangeHandler}
                         />
 
-                        <EditableSpan value={t.title} onChange={onTitleChangeHandler} />
+                        <EditableSpan value={t.title} onChange={onTitleChangeHandler}/>
                         <IconButton onClick={onClickHandler}>
-                            <Delete />
+                            <Delete/>
                         </IconButton>
                     </div>
                 })
             }
         </div>
-        <div style={{ paddingTop: "10px"}}>
+        <div style={{paddingTop: "10px"}}>
             <Button variant={props.filter === 'all' ? 'outlined' : 'text'}
                     onClick={onAllClickHandler}
                     color={'default'}
