@@ -42,6 +42,10 @@ export const CreateTodolist = () => {
 export const DeleteTodolist = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
+        axios.delete("https://social-network.samuraijs.com/api/1.1/todo-lists/aa9345c6-d7dd-4864-9311-4ddc8b9ed662", settings)
+            .then((res) => {
+                setState(res.data)
+            })
     }, [])
 
     return <div> {JSON.stringify(state)}</div>
