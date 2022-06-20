@@ -5,18 +5,9 @@ export default {
     title: 'API'
 }
 
-const settings = {
-    withCredentials: true,
-    headers: {
-        "API-KEY": "8d69feac-9319-4391-a8a4-a23d67360845"
-    }
-}
-
 export const GetTodolists = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        // здесь мы будем делать запрос и ответ закидывать в стейт.
-        // который в виде строки будем отображать в div-ке
         todolistsAPI.getTodolists()
             .then((res) => {
                 setState(res.data)
@@ -30,7 +21,7 @@ export const GetTodolists = () => {
 export const CreateTodolist = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        todolistsAPI.createTodolist("123")
+        todolistsAPI.createTodolist('123')
             .then((res) => {
                 setState(res.data)
             })
@@ -60,6 +51,21 @@ export const UpdateTodolistTitle = () => {
             .then((res) => {
                 setState(res.data)
             })
+    }, [])
+
+    return <div> {JSON.stringify(state)}</div>
+}
+
+
+export const GetTasks = () => {
+    const [state, setState] = useState<any>(null)
+    useEffect(() => {
+        const todolistId = 'aba39e09-f084-42ba-9c7b-b8d61e8ff9c1'
+        todolistsAPI.getTasks(todolistId)
+            .then((res) => {
+                setState(res.data)
+            })
+
     }, [])
 
     return <div> {JSON.stringify(state)}</div>
