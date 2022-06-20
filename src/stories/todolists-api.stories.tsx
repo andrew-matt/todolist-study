@@ -1,5 +1,5 @@
-import axios from 'axios'
 import React, {useEffect, useState} from 'react'
+import {todolistsAPI} from '../api/todolists-api';
 
 export default {
     title: 'API'
@@ -17,7 +17,7 @@ export const GetTodolists = () => {
     useEffect(() => {
         // здесь мы будем делать запрос и ответ закидывать в стейт.
         // который в виде строки будем отображать в div-ке
-        axios.get("https://social-network.samuraijs.com/api/1.1/todo-lists", settings)
+        todolistsAPI.getTodolists()
             .then((res) => {
                 setState(res.data)
             })
@@ -30,7 +30,7 @@ export const GetTodolists = () => {
 export const CreateTodolist = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        axios.post("https://social-network.samuraijs.com/api/1.1/todo-lists", {title: "123"}, settings)
+        todolistsAPI.createTodolist("123")
             .then((res) => {
                 setState(res.data)
             })
@@ -42,8 +42,8 @@ export const CreateTodolist = () => {
 export const DeleteTodolist = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        const todolistId = 'aa9345c6-d7dd-4864-9311-4ddc8b9ed662'
-        axios.delete(`https://social-network.samuraijs.com/api/1.1/todo-lists/${todolistId}`, settings)
+        const todolistId = '7fdfd15a-959d-43f9-ab3e-428348a65816'
+        todolistsAPI.deleteTodolist(todolistId)
             .then((res) => {
                 setState(res.data)
             })
@@ -55,8 +55,8 @@ export const DeleteTodolist = () => {
 export const UpdateTodolistTitle = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        const todolistId = '84b334b0-e19b-4520-a266-79d45a2b6bca'
-        axios.put(`https://social-network.samuraijs.com/api/1.1/todo-lists/84b334b0-e19b-4520-a266-79d45a2b6bca${todolistId}`, {title: "456"}, settings)
+        const todolistId = '7fdfd15a-959d-43f9-ab3e-428348a65816'
+        todolistsAPI.updateTodolist(todolistId, '789')
             .then((res) => {
                 setState(res.data)
             })
