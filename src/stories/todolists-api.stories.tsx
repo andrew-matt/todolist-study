@@ -71,3 +71,16 @@ export const GetTasks = () => {
     return <div> {JSON.stringify(state)}</div>
 }
 
+export const DeleteTask = () => {
+    const [state, setState] = useState<any>(null)
+    useEffect(() => {
+        const todolistId = '1'
+        const taskId = '2'
+        todolistsAPI.deleteTask(todolistId, taskId)
+            .then((res) => {
+                setState(res.data)
+            })
+    }, [])
+
+    return <div> {JSON.stringify(state)}</div>
+}
