@@ -20,7 +20,7 @@ import {
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from './state/tasks-reducer';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from './state/store';
-import {TaskType, TodolistType} from './api/todolists-api';
+import {TaskStatuses, TaskType, TodolistType} from './api/todolists-api';
 
 
 export type FilterValuesType = 'all' | 'active' | 'completed';
@@ -49,8 +49,8 @@ function App() {
         dispatch(action);
     }, []);
 
-    const changeStatus = useCallback(function (id: string, isDone: boolean, todolistId: string) {
-        const action = changeTaskStatusAC(id, isDone, todolistId);
+    const changeStatus = useCallback(function (id: string, status: TaskStatuses, todolistId: string) {
+        const action = changeTaskStatusAC(id, status, todolistId);
         dispatch(action);
     }, []);
 
