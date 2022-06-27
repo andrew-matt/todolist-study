@@ -264,6 +264,11 @@ export const UpdateTask = () => {
     const [todolistId, setTodolistId] = useState('')
     const [taskId, setTaskId] = useState('')
     const [taskTitle, setTaskTitle] = useState('')
+    const [taskDescription, setTaskDescription] = useState('')
+    const [taskStatus, setTaskStatus] = useState(0)
+    const [taskPriority, setTaskPriority] = useState(0)
+    const [taskStartDate, setTaskStartDate] = useState('')
+    const [taskDeadline, setTaskDeadline] = useState('')
 
     const onTodolistIdInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         setTodolistId(e.currentTarget.value)
@@ -275,6 +280,26 @@ export const UpdateTask = () => {
 
     const onTaskTitleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         setTaskTitle(e.currentTarget.value)
+    }
+
+    const onTaskDescriptionInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setTaskDescription(e.currentTarget.value)
+    }
+
+    const onTaskStatusInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setTaskStatus(e.currentTarget.valueAsNumber)
+    }
+
+    const onTaskPriorityInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setTaskPriority(e.currentTarget.valueAsNumber)
+    }
+
+    const onTaskStartDateInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setTaskStartDate(e.currentTarget.value)
+    }
+
+    const onTaskDeadlineInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setTaskDeadline(e.currentTarget.value)
     }
 
     const updateTaskTitle = () => {
@@ -313,7 +338,42 @@ export const UpdateTask = () => {
                     />
                 </div>
                 <div>
-                    <button onClick={updateTaskTitle}>update task title</button>
+                    <input
+                        value={taskDescription}
+                        placeholder={'task description'}
+                        onChange={onTaskDescriptionInputChange}
+                    />
+                </div>
+                <div>
+                    <input
+                        value={taskStatus}
+                        type={'number'}
+                        onChange={onTaskStatusInputChange}
+                    />
+                </div>
+                <div>
+                    <input
+                        value={taskPriority}
+                        type={'number'}
+                        onChange={onTaskPriorityInputChange}
+                    />
+                </div>
+                <div>
+                    <input
+                        value={taskStartDate}
+                        placeholder={'task start date'}
+                        onChange={onTaskStartDateInputChange}
+                    />
+                </div>
+                <div>
+                    <input
+                        value={taskDeadline}
+                        placeholder={'task deadline'}
+                        onChange={onTaskDeadlineInputChange}
+                    />
+                </div>
+                <div>
+                    <button onClick={updateTaskTitle}>update task</button>
                 </div>
             </div>
             {JSON.stringify(state)}
