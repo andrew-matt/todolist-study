@@ -34,7 +34,7 @@ export type TasksStateType = {
 function App() {
 
     useEffect(() => {
-        fetchTodolistsThunk(dispatch);
+        dispatch(fetchTodolistsThunk)
     }, []);
 
     const todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists);
