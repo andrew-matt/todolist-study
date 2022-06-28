@@ -15,7 +15,7 @@ import {
     addTodolistAC,
     changeTodolistFilterAC,
     changeTodolistTitleAC,
-    fetchTodolistsThunk,
+    fetchTodolistsTC,
     FilterValuesType,
     removeTodolistAC,
     TodolistDomainType,
@@ -34,7 +34,7 @@ export type TasksStateType = {
 function App() {
 
     useEffect(() => {
-        dispatch(fetchTodolistsThunk)
+        dispatch(fetchTodolistsTC());
     }, []);
 
     const todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists);
