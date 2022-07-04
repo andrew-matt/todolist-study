@@ -7,6 +7,8 @@ import {
     setAppStatusAC,
     SetAppStatusActionType,
 } from '../../app/app-reducer';
+import {Simulate} from 'react-dom/test-utils';
+import {handleServerAppError, handleServerNetworkError} from '../../utils/error-utils';
 
 const initialState: Array<TodolistDomainType> = [];
 
@@ -62,7 +64,7 @@ export const fetchTodolistsTC = () => {
 };
 export const removeTodolistTC = (todolistId: string) => {
     return (dispatch: Dispatch<ActionsType>) => {
-        dispatch(changeTodolistEntityStatusAC(todolistId, 'loading'))
+        dispatch(changeTodolistEntityStatusAC(todolistId, 'loading'));
         dispatch(setAppStatusAC('loading'));
         todolistsAPI.deleteTodolist(todolistId)
             .then((res) => {
@@ -95,8 +97,15 @@ export const changeTodolistTitleTC = (id: string, title: string) => {
         dispatch(setAppStatusAC('loading'));
         todolistsAPI.updateTodolist(id, title)
             .then((res) => {
-                dispatch(changeTodolistTitleAC(id, title));
-                dispatch(setAppStatusAC('succeeded'));
+                if (res.data.resultCode === 0) {
+                    dispatch(changeTodolistTitleAC(id, title));
+                    dispatch(setAppStatusAC('succeeded'));
+                } else {
+                    handleServerAppError(res.data, dispatch);
+                }
+            })
+            .catch(error => {
+                handleServerNetworkError(error, dispatch);
             });
     };
 };
