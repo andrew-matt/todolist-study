@@ -8,6 +8,8 @@ import FormLabel from '@mui/material/FormLabel';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import {useFormik} from 'formik';
+import {useDispatch} from 'react-redux';
+import {loginTC} from './auth-reducer';
 
 type FormikErrorType = {
     email?: string
@@ -16,6 +18,8 @@ type FormikErrorType = {
 }
 
 export const Login = () => {
+
+    const dispatch = useDispatch();
 
     const formik = useFormik({
         initialValues: {
@@ -40,8 +44,9 @@ export const Login = () => {
             return errors;
         },
         onSubmit: values => {
-            alert(JSON.stringify(values));
+            // alert(JSON.stringify(values));
             formik.resetForm();
+            dispatch(loginTC(values));
         },
     });
 
@@ -79,9 +84,7 @@ export const Login = () => {
                             label={'Remember me'}
                             control={
                                 <Checkbox
-                                    name="rememberMe"
-                                    onChange={formik.handleChange}
-                                    value={formik.values.rememberMe}
+                                    {...formik.getFieldProps('rememberMe')}
                                 />}
                         />
                         <Button type={'submit'} variant={'contained'} color={'primary'}>
