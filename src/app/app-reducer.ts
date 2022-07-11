@@ -1,18 +1,22 @@
+import {Dispatch} from 'redux';
+import {authAPI} from '../api/todolists-api';
+import {setIsLoggedInAC} from '../features/Login/auth-reducer';
+
 const initialState: InitialStateType = {
     status: 'idle',
-    error: null
-}
+    error: null,
+};
 
 export const appReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
     switch (action.type) {
         case 'APP/SET-STATUS':
-            return {...state, status: action.status}
+            return {...state, status: action.status};
         case 'APP/SET-ERROR':
-            return {...state, error: action.error}
+            return {...state, error: action.error};
         default:
-            return {...state}
+            return {...state};
     }
-}
+};
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 export type InitialStateType = {
@@ -22,11 +26,20 @@ export type InitialStateType = {
     error: string | null
 }
 
-export const setAppErrorAC = (error: string | null) => ({type: 'APP/SET-ERROR', error} as const)
-export const setAppStatusAC = (status: RequestStatusType) => ({type: 'APP/SET-STATUS', status} as const)
+export const setAppErrorAC = (error: string | null) => ({type: 'APP/SET-ERROR', error} as const);
+export const setAppStatusAC = (status: RequestStatusType) => ({type: 'APP/SET-STATUS', status} as const);
 
 export type SetAppErrorActionType = ReturnType<typeof setAppErrorAC>
 export type SetAppStatusActionType = ReturnType<typeof setAppStatusAC>
+
+export const initializeAppTC = () => (dispatch: Dispatch) => {
+    authAPI.me().then(res => {
+        if (res.data.resultCode === 0) {
+            dispatch(setIsLoggedInAC(true));
+        } else {
+        }
+    });
+};
 
 type ActionsType =
     | SetAppErrorActionType
